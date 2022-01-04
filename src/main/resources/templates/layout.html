@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout (title, content)">
+	<head>
+		<!-- meta -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!-- bootstrap CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
+		
+		<!-- custom CSS -->
+		<link rel="stylesheet" href="#" th:href="@{/css/minesweeper.css}" />
+		
+		<!-- allow templates to use query (dirty) -->
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+		<!-- page title, will be replaced by given fragment -->
+		<title th:replace="${title}">Application Title</title>
+	</head>
+	<body>
+		<!-- our site will use bootstrap container layout -->
+		<div class="container">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<a class="navbar-brand" href="#" th:href="@{/}">Minesweeper</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					 <ul class="navbar-nav">
+						 <li class="nav-item">
+							 <a class="nav-link" href="#" th:href="@{/}">Home</a>
+						 </li>
+					 	<li class="nav-item">
+					 		<a class="nav-link" href="#" th:href="@{/minesweeper/create}">New game</a>
+				 		</li>
+					 </ul>
+				</div>
+			</nav>
+		
+			<div class="jumbotron" th:replace="${content}">
+				<!-- content to templace -->
+				<p>Layout page, content gets here !</p>
+			</div>
+		</div>
+		
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+	</body>
+</html>
