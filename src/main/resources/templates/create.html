@@ -1,0 +1,31 @@
+<html th:replace="~{layout :: layout(~{::title}, ~{::content})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:fragment="title">Welcome to Minesweeper</title>
+</head>
+<body>
+<div th:fragment="content">
+    <h1>Create a New Game !</h1>
+
+    <p>Width and Height should be between 2 and 20</p>
+    <p>There should be less mine than cells (obviously)</p>
+
+    <form action="#" th:action="@{/minesweeper/create}" method="post" th:object="${form}">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group">
+            <label for="width">Field Width</label>
+            <input type="text" class="form-control" id="width" placeholder="width" th:field="*{width}">
+        </div>
+        <div class="form-group">
+            <label for="height">Field Height</label>
+            <input type="text" class="form-control" id="height" placeholder="height" th:field="*{height}">
+        </div>
+        <div class="form-group">
+            <label for="count">Number of mines</label>
+            <input type="text" class="form-control" id="count" placeholder="Number of mines" th:field="*{count}">
+        </div>
+        <button type="submit" class="btn btn-primary">New Game</button>
+    </form>
+
+</div>
+</body>
+</html>
