@@ -9,7 +9,7 @@
     <p>Width and Height should be between 2 and 20</p>
     <p>There should be less mine than cells (obviously)</p>
 
-    <form action="#" th:action="@{/minesweeper/create}" method="post" th:object="${form}">
+    <form action="#" th:action="@{/game/create}" method="post" th:object="${form}">
         <input type="hidden" th:field="*{id}">
         <div class="form-group">
             <label for="width">Field Width</label>

@@ -12,6 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Table(name = "\"game\"")
 public class Minefield
 {
 	@Id
