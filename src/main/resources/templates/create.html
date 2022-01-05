@@ -23,7 +23,7 @@
             <label for="count">Number of mines</label>
             <input type="text" class="form-control" id="count" placeholder="Number of mines" th:field="*{count}">
         </div>
-        <button type="submit" class="btn btn-primary">New Game</button>
+        <button type="submit" class="btn btn-primary" th:href="@{/minesweeper/game}">New Game</button>
     </form>
 
 </div>

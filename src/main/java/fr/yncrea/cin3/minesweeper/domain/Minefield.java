@@ -22,8 +22,6 @@ public class Minefield
 	private long height;
 	private long count;
 
-	public Minefield() {}
-
 	public Minefield(long width, long height)
 	{
 		this.width = width;

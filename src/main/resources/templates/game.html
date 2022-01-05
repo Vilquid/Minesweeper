@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr" th:replace="~{create :: create(~{::colonnes}, ~{::lignes})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title th:fragment="@{title}">Welcome to Minesweeper</title>
+</head>
+<body>
+<div class="container">
+<!--	<div th:fragment="content"></div>-->
+	<span class="alert alert-info" role="alert">This is your minefield, there is 24 mines in it !</span>
+	<span class="alert alert-info" role="alert">You have lost the game.</span>
+	<table>
+		<tbody>
+			<tr>
+				<td onclick="location.href='/minesweeper/play/th:fragment="@{title}"/th:fragment="@{uuid}"/th:fragment="@{colonne}"'"><td>
+				<td>with two columns</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+</div>
+</body>
+</html>
