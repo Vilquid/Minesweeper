@@ -33,6 +33,34 @@ public class MinesweeperEngineService
 	 */
 	static void floodFillUtil(Minefield minefield, int x, int y, int nb_colonne, int nb_ligne, int prevC, int newC)
 	{
+		/**
+		 * 							Algo à ma façon :
+		 * Récupérer les coordonnées x et y de la case sur laquelle on clique
+		 * si c'est une bombe :
+		 * 		la partie est terminée
+		 *
+		 * 	for(i=-1; i<2; i++)
+		 * 	{
+		 * 		for(j=-1; j<2; j++)
+		 * 		{
+		 * 			si minefield[x][y] == 0 :
+		 * 		  		Découvrir la cellule
+		 * 		  		x=i
+		 * 		  		y=j
+		 * 		  		(récursivité) lancer une nouvelle fois la fonction avec les nouveaux x et y
+		 *
+		 * 		  		for(k=-1; k<2; k++)
+		 * 		 		{
+		 * 		  			for(l=-1; l<2; l++)
+		 * 		  			{
+		 * 		  				si minefield[k][l] != 0 && minefield[k][l] n'est pas une bombe :
+		 * 		  		  			Découvrir la cellule
+		 * 		  		 			afficher le numéro de bombe qu'elle a à coté d'elle
+		 * 		  			}
+		 * 		  		}
+		 * 		 }
+		 * 	}
+		 */
 		if (x < 0 || x >= nb_colonne || y < 0 || y >= nb_ligne)
 			return;
 		if (minefield[x][y] != prevC)
