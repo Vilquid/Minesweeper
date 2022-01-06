@@ -49,7 +49,9 @@ public class CreateController {
         m.setHeight(form.getHeight());
         m.setCount(form.getCount());
         minefield.save(m);
-        return "redirect:/game/list";
+        minefield.findAll();
+
+        return "redirect:/play/{}";
     }
 }
 
