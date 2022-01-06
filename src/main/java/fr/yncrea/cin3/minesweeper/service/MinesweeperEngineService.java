@@ -23,36 +23,37 @@ public class MinesweeperEngineService
 	 * Create a new minefield
 	 *
 	 * @param minefield
-	 * @param
-	 * @param width
-	 * @param heightcount
-	 * @param
-	 * @param
+	 * @param x Colonne actuellle
+	 * @param y Ligne actuelle
+	 * @param nb_colonne Nombre de colonnes au total
+	 * @param nb_ligne Nombre de lignes au total
+	 * @param prevC
+	 * @param newC
 	 * @return Que dalle !
 	 */
-//	static void floodFillUtil(Minefield minefield, int x, int y, int colonne, int ligne, int prevC, int newC)
-//	{
-//		if (x < 0 || x >= colonne || y < 0 || y >= ligne)
-//			return;
-//		if (minefield[x][y] != prevC)
-//			return;
-//
-//		// Replace the color at (x, y)
-//		minefield[x][y] = newC;
-//
-//		// Recur for north, east, south and west
-//		floodFillUtil(screen, x+1, y, prevC, newC);
-//		floodFillUtil(screen, x-1, y, prevC, newC);
-//		floodFillUtil(screen, x, y+1, prevC, newC);
-//		floodFillUtil(screen, x, y-1, prevC, newC);
-//	}
-//
-//	static void floodFill(int screen[][], int x, int y, int newC)
-//	{
-//		int prevC = screen[x][y];
-//		if(prevC==newC) return;
-//		floodFillUtil(screen, x, y, prevC, newC);
-//	}
+	static void floodFillUtil(Minefield minefield, int x, int y, int nb_colonne, int nb_ligne, int prevC, int newC)
+	{
+		if (x < 0 || x >= nb_colonne || y < 0 || y >= nb_ligne)
+			return;
+		if (minefield[x][y] != prevC)
+			return;
+
+		// Replace the color at (x, y)
+		minefield[x][y] = newC;
+
+		// Recur for north, east, south and west
+		floodFillUtil(minefield, x+1, y, nb_colonne, nb_ligne, prevC, newC);
+		floodFillUtil(minefield, x-1, y, nb_colonne, nb_ligne, prevC, newC);
+		floodFillUtil(minefield, x, y+1, nb_colonne, nb_ligne, prevC, newC);
+		floodFillUtil(minefield, x, y-1, nb_colonne, nb_ligne, prevC, newC);
+	}
+
+	static void floodFill(Minefield minefield, int x, int y, int nb_colonne, int nb_ligne, int newC)
+	{
+		int prevC = minefield[x][y];
+		if(prevC==newC) return;
+		floodFillUtil(minefield, x, y, nb_colonne, nb_ligne, prevC, newC);
+	}
 	/**
 	 * Discover a new cell, and update the game (win/loss detection, ...)
 	 *
@@ -71,7 +72,7 @@ public class MinesweeperEngineService
 	 * @param minefield
 	 * @param x - colonne
 	 * @param y - ligne
-	 * 10 = il y a une bombe
+	 * 9 = il y a une bombe
 	 */
 	public void addMine(Minefield minefield, long x, long y)
 	{
@@ -123,10 +124,23 @@ public class MinesweeperEngineService
 	 * @param minefield
 	 * @param x
 	 * @param y
-	 * @return
+	 * @return bool
 	 */
 	public boolean isDiscovered(Minefield minefield, long x, long y)
 	{
+		if (minefield != null)
+		{
+			if (minefield[x][y].estRevelee == true)
+			{
+				return true;
+			}
+
+			else
+			{
+				return false;
+			}
+		}
+
 		return false;
 	}
 }
