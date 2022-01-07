@@ -7,6 +7,34 @@
     <h1>Welcome to Minesweeper</h1>
 
     <p>This is a really great game !</p>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>#</th>
+            <th>Width</th>
+            <th>Height</th>
+            <th>Count</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="game: ${games}" th:object="${game}" th:if="${game.status=='STARTED'}">
+            <td th:text="*{id}">1</td>
+            <td th:text="*{width}">pierre.ponce@something.org</td>
+            <td th:text="*{height}">Pierre</td>
+            <td th:text="*{count}">Ponce</td>
+            <td>
+                <a href="#" th:href="@{/game/update/{id}(id=*{id})}" class="btn btn-primary">
+                    <i class="ri-play-line"></i>
+                </a>
+                <form action="#" th:action="@{/game/delete/{id}(id=*{id})}" method="post" style="display: inline">
+                    <button type="submit" class="btn btn-danger"><i class="ri-delete-bin-line"></i></button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

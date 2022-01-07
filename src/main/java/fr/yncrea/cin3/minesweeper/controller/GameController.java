@@ -1,5 +1,6 @@
 package fr.yncrea.cin3.minesweeper.controller;
 
+import fr.yncrea.cin3.minesweeper.domain.GameStatus;
 import fr.yncrea.cin3.minesweeper.domain.Minefield;
 import fr.yncrea.cin3.minesweeper.form.CreateForm;
 import fr.yncrea.cin3.minesweeper.repository.MinefieldRepository;
@@ -43,7 +44,7 @@ public class GameController {
 
         //if (form.getId() != null) {
         //.orElseThrow(() -> new RuntimeException("game not create"));
-        Minefield m = minefield.save(minefieldService.create(form.getWidth(), form.getHeight(), form.getCount()));
+        Minefield m = minefield.save(minefieldService.create(form.getWidth(), form.getHeight(), form.getCount(), GameStatus.STARTED));
         //}
         return "redirect:/minesweeper/game/" + m.getId();
     }

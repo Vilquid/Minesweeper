@@ -1,5 +1,6 @@
 package fr.yncrea.cin3.minesweeper.service;
 
+import fr.yncrea.cin3.minesweeper.domain.GameStatus;
 import fr.yncrea.cin3.minesweeper.domain.Minefield;
 import org.springframework.stereotype.Service;
 
@@ -179,9 +180,9 @@ public class MinesweeperEngineService
 	 * @param count
 	 * @return
 	 */
-	public Minefield create(long width, long height, long count)
+	public Minefield create(long width, long height, long count, GameStatus status)
 	{
-		return new Minefield(width, height);
+		return new Minefield(width, height, status,count);
 	}
 
 	/**

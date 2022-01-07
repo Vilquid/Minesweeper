@@ -22,16 +22,21 @@ public class Minefield
 	private long width;
 	private long height;
 	private long count;
-	
+
+	@Enumerated(EnumType.STRING)
+	private GameStatus status;
 
 
 	private tab[][] board;
 
 	public Minefield() {}
 
-	public Minefield(long width, long height)
+	public Minefield(long width, long height,GameStatus status, long count)
 	{
 		this.width = width;
 		this.height = height;
+		this.status = status;
+		this.count = count;
 	}
+
 }
