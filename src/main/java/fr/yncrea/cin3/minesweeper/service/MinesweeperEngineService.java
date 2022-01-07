@@ -41,10 +41,9 @@ public class MinesweeperEngineService
 	 * @param newC
 	 * @return Que dalle !
 	 */
-	/**static void floodFillUtil(int minefield[][], int x, int y, int nb_colonne, int nb_ligne, int prevC, int newC)
+	static void floodFillUtil(int minefield[][], int x, int y, int nb_colonne, int nb_ligne, int prevC, int newC)
 	{
-
-		if (minefield[x][y].hasMine(minefield, x, y) == true)
+		if (minefield[x][y] == 2 || minefield[x][y] == 2)
 		{
 //			fin de partie
 		}
@@ -85,18 +84,6 @@ public class MinesweeperEngineService
 		if(prevC==newC) return;
 
 		floodFillUtil(minefield, x, y, nb_colonne, nb_ligne, prevC, newC);
-	}*/
-
-	/**
-	 * Discover a new cell, and update the game (win/loss detection, ...)
-	 *
-	 * @param minefield
-	 * @param x
-	 * @param y
-	 */
-	/*public void play(Minefield minefield, long x, long y)
-	{
-
 	}
 
 	/**
@@ -118,8 +105,8 @@ public class MinesweeperEngineService
 	 * Returns the mine count near a cell
 	 *
 	 * @param minefield
-	 * @param x
-	 * @param y
+	 * @param x colonne
+	 * @param y ligne
 	 * @return
 	 */
 	/*public long getMineCountNear(Minefield minefield, long x, long y)
@@ -135,48 +122,18 @@ public class MinesweeperEngineService
 	 * @param ligne
 	 * @return bool
 	 */
-	/*public boolean hasMine(Minefield minefield, long colonne, long ligne)
-	{/**
-		if (minefield == null)
-		{
-			return false;
-		}
 
-//		Mise en commentaire du if car le type de minefield n'est pas encore déterminé
-//		if (minefield[colonne][ligne] == "9")
-//		{
-//			return true;
-//		}
+	public boolean hasMine(int minefield, int colonne, int ligne)
+	{
+		if (minefield[colonne][ligne] == 3)
+		{
+			return true;
+		}
 
 		else
 			return false;
-	}*/
+	}
 
-	/**
-	 * Returns true is the cell is already discovered
-	 *
-	 * @param minefield
-	 * @param x
-	 * @param y
-	 * @return bool
-	 */
-	/*public boolean isDiscovered(Minefield minefield, long x, long y)
-	{
-		/**if (minefield != null)
-		{
-			if (minefield[x][y].estRevelee == true)
-			{
-				return true;
-			}
-
-			else
-			{
-				return false;
-			}
-		}
-
-		return false;
-	}*/
 	/**
 	 * Create a new minefield
 	 *
@@ -212,14 +169,39 @@ public class MinesweeperEngineService
 	 * @param x
 	 * @param y
 	 */
-	public void play(Minefield minefield, long x, long y)
-	{}
+	public void play(Minefield minefield, int colonne, int ligne int x, int y)
+	{
+		if (minefield[x][y] == 1)
+		{
+			throw new MinesweeperException("Case déjà découverte");
+		}
+
+		else
+		{
+			if (hasMine(minefield, x, y))
+			{
+				minefield[x][y] = 2;
+				// partie perdue
+			}
+
+			else
+			{
+				floodFill(minefield, x, y, nb_colonne, nb_ligne, newC);
+			}
+		}
+	}
+
 	private boolean hasMine(Minefield minefield, int x, int y)
 	{
 		if (minefield.getMinefield()[(int) x][(int) y] == 2 || minefield.getMinefield()[(int) x][(int) y] == 3)
+		{
 			return true;
+		}
+
 		else
+		{
 			return false;
+		}
 	}
 
 	/**
@@ -228,24 +210,12 @@ public class MinesweeperEngineService
 	 * @param minefield
 	 * @param x
 	 * @param y
-	 * @return
+	 * @return 0
 	 */
 	public long getMineCountNear(Minefield minefield, long x, long y)
 	{
 		return 0;
 	}
-
-	/**
-	 * Returns true is the cell contains a mine
-	 *
-	 * @param minefield
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-
-
-
 
 	/**
 	 * Returns true is the cell is already discovered
@@ -255,8 +225,16 @@ public class MinesweeperEngineService
 	 * @param y
 	 * @return
 	 */
-//	public boolean isDiscovered(Minefield minefield, long x, long y)
-//	{
-//		return false;
-//	}
+	public boolean isDiscovered(Minefield minefield, long x, long y)
+	{
+//		if (minefield.getMinefield()[(int) x][(int) y] == 1 || minefield.getMinefield()[(int) x][(int) y] == 3)
+//		{
+//			return true;
+//		}
+//
+//		else
+//		{
+//			return false;
+//		}
+	}
 }
