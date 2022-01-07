@@ -23,13 +23,13 @@ public class Minefield
 	private long height;
 	private long count;
 
-	@Enumerated
+
 	private tab[][] board;
 
 	public Minefield() {}
-
 	public Minefield(long width, long height)
 	{
+		//board = new tab[10][3];
 		this.width = width;
 		this.height = height;
 	}
