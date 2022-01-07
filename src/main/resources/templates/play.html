@@ -1,0 +1,25 @@
+<html th:replace="~{layout :: layout(~{::title}, ~{::content})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:fragment="title">Welcome to Minesweeper</title>
+</head>
+<body>
+<div class="container-play-div" th:fragment="content">
+
+    <span class="alert alert-info" role="alert">This is your minefield, there is <span th:text="${game.count}">4</span> mines in it ! and <span th:text="${game.id}">4</span></span>
+    <span class="alert alert-info" role="alert" th:text="${game.width}">4</span>
+    <span class="alert alert-info" role="alert" th:text="${game.height}">4</span>
+    <!--<span class="alert alert-info" role="alert">You have lost the game.</span>-->
+    <table class="board">
+        <tr th:each="row: ${#numbers.sequence(1, game.height)}">
+            <td th:each="column: ${#numbers.sequence(1, game.width)}"
+                th:text="${game.board}"
+                th:onclick="|location.href=''|">
+            </td>
+        </tr>
+    </table>
+
+
+</div>
+</body>
+</html>

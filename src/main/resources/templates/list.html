@@ -1,0 +1,34 @@
+<html th:replace="~{layout :: layout(~{::title}, ~{::content})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:fragment="title">User list</title>
+</head>
+<body>
+<div th:fragment="content">
+    <p>
+        <a th:href="@{/game/create}" class="btn btn-secondary">Add game</a>
+    </p>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>#</th>
+            <th>Width</th>
+            <th>Height</th>
+            <th>Count</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="game: ${games}" th:object="${game}">
+            <td th:text="*{id}">1</td>
+            <td th:text="*{width}">pierre.ponce@something.org</td>
+            <td th:text="*{height}">Pierre</td>
+            <td th:text="*{count}">Ponce</td>
+            <td>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
