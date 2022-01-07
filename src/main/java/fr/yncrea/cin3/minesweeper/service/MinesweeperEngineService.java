@@ -214,7 +214,13 @@ public class MinesweeperEngineService
 	 */
 	public void play(Minefield minefield, long x, long y)
 	{}
-
+	private boolean hasMine(Minefield minefield, int x, int y)
+	{
+		if (minefield.getMinefield()[(int) x][(int) y] == 2 || minefield.getMinefield()[(int) x][(int) y] == 3)
+			return true;
+		else
+			return false;
+	}
 
 	/**
 	 * Returns the mine count near a cell
