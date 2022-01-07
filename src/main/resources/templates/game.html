@@ -13,7 +13,7 @@
 	<table class="board">
 		<tr th:each="row: ${#numbers.sequence(1, game.height)}">
 			<td th:each="column: ${#numbers.sequence(1, game.width)}"
-				th:text="${game.board}"
+				th:text="${game.minefield}"
 				th:onclick="|location.href=''|">
 			</td>
 		</tr>
