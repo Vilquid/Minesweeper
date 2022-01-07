@@ -12,6 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Table(name = "\"game\"")
 public class Minefield
 {
 	@Id
@@ -21,6 +22,9 @@ public class Minefield
 	private long width;
 	private long height;
 	private long count;
+
+	@Enumerated
+	private tab[][] board;
 
 	public Minefield() {}
 
