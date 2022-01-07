@@ -22,8 +22,9 @@ public class Minefield
 	private long width;
 	private long height;
 	private long count;
+	
 
-	@Enumerated
+
 	private tab[][] board;
 
 	public Minefield() {}

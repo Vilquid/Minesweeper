@@ -1,0 +1,19 @@
+table.board {
+    border-collapse: collapse;
+    width: fit-content;
+}
+
+table.board td {
+    border: 1px solid black;
+    font-size: 3em;
+    font-family: Consolas,monaco,monospace;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+}
+
+.container-play-div{
+    display: flex;
+    flex-direction: column;
+    margin-top: 2%;
+}

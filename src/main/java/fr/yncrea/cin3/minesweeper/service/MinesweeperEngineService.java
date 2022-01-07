@@ -14,7 +14,7 @@ public class MinesweeperEngineService
 	 * @param count
 	 * @return
 	 */
-	public Minefield create(long width, long height, long count)
+	/*public Minefield create(long width, long height, long count)
 	{
 		return new Minefield(width, height);
 	}
@@ -31,7 +31,7 @@ public class MinesweeperEngineService
 	 * @param newC
 	 * @return Que dalle !
 	 */
-	static void floodFillUtil(Minefield minefield, int x, int y, int nb_colonne, int nb_ligne, int prevC, int newC)
+	/*static void floodFillUtil(Minefield minefield, int x, int y, int nb_colonne, int nb_ligne, int prevC, int newC)
 	{
 		/**
 		 * 							Algo à ma façon :
@@ -61,7 +61,7 @@ public class MinesweeperEngineService
 		 * 		 }
 		 * 	}
 		 */
-		if (x < 0 || x >= nb_colonne || y < 0 || y >= nb_ligne)
+		/**if (x < 0 || x >= nb_colonne || y < 0 || y >= nb_ligne)
 			return;
 		if (minefield[x][y] != prevC)
 			return;
@@ -73,10 +73,10 @@ public class MinesweeperEngineService
 		floodFillUtil(minefield, x+1, y, nb_colonne, nb_ligne, prevC, newC);
 		floodFillUtil(minefield, x-1, y, nb_colonne, nb_ligne, prevC, newC);
 		floodFillUtil(minefield, x, y+1, nb_colonne, nb_ligne, prevC, newC);
-		floodFillUtil(minefield, x, y-1, nb_colonne, nb_ligne, prevC, newC);
-	}
+		floodFillUtil(minefield, x, y-1, nb_colonne, nb_ligne, prevC, newC);*/
+	/*}
 
-	static void floodFill(Minefield minefield, int x, int y, int nb_colonne, int nb_ligne, int newC)
+	/*static void floodFill(Minefield minefield, int x, int y, int nb_colonne, int nb_ligne, int newC)
 	{
 		int prevC = minefield[x][y];
 		if(prevC==newC) return;
@@ -89,7 +89,7 @@ public class MinesweeperEngineService
 	 * @param x
 	 * @param y
 	 */
-	public void play(Minefield minefield, long x, long y)
+	/*public void play(Minefield minefield, long x, long y)
 	{
 
 	}
@@ -102,11 +102,107 @@ public class MinesweeperEngineService
 	 * @param y - ligne
 	 * 9 = il y a une bombe
 	 */
-	public void addMine(Minefield minefield, long x, long y)
+	/*public void addMine(Minefield minefield, long x, long y)
 	{
 //		Mise en commentaire de la ligne suivante car le type de minefield n'est pas encore déterminé
 //		minefield[x][y] = 9;
 	}
+
+	/**
+	 * Returns the mine count near a cell
+	 *
+	 * @param minefield
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	/*public long getMineCountNear(Minefield minefield, long x, long y)
+	{
+		return 0;
+	}
+
+	/**
+	 * Returns true is the cell contains a mine
+	 *
+	 * @param minefield
+	 * @param colonne
+	 * @param ligne
+	 * @return bool
+	 */
+	/*public boolean hasMine(Minefield minefield, long colonne, long ligne)
+	{/**
+		if (minefield == null)
+		{
+			return false;
+		}
+
+//		Mise en commentaire du if car le type de minefield n'est pas encore déterminé
+//		if (minefield[colonne][ligne] == "9")
+//		{
+//			return true;
+//		}
+
+		else
+			return false;
+	}*/
+
+	/**
+	 * Returns true is the cell is already discovered
+	 *
+	 * @param minefield
+	 * @param x
+	 * @param y
+	 * @return bool
+	 */
+	/*public boolean isDiscovered(Minefield minefield, long x, long y)
+	{
+		/**if (minefield != null)
+		{
+			if (minefield[x][y].estRevelee == true)
+			{
+				return true;
+			}
+
+			else
+			{
+				return false;
+			}
+		}
+
+		return false;
+	}*/
+	/**
+	 * Create a new minefield
+	 *
+	 * @param width
+	 * @param height
+	 * @param count
+	 * @return
+	 */
+	public Minefield create(long width, long height, long count)
+	{
+		return new Minefield(width, height);
+	}
+
+	/**
+	 * Discover a new cell, and update the game (win/loss detection, ...)
+	 *
+	 * @param minefield
+	 * @param x
+	 * @param y
+	 */
+	public void play(Minefield minefield, long x, long y)
+	{}
+
+	/**
+	 * Add a mine on the field
+	 *
+	 * @param minefield
+	 * @param x
+	 * @param y
+	 */
+	public void addMine(Minefield minefield, long x, long y)
+	{}
 
 	/**
 	 * Returns the mine count near a cell
@@ -125,25 +221,12 @@ public class MinesweeperEngineService
 	 * Returns true is the cell contains a mine
 	 *
 	 * @param minefield
-	 * @param colonne
-	 * @param ligne
-	 * @return bool
+	 * @param x
+	 * @param y
+	 * @return
 	 */
-	public boolean hasMine(Minefield minefield, long colonne, long ligne)
-	{
-		if (minefield == null)
-		{
-			return false;
-		}
-
-//		Mise en commentaire du if car le type de minefield n'est pas encore déterminé
-//		if (minefield[colonne][ligne] == "9")
-//		{
-//			return true;
-//		}
-
-		else
-			return false;
+	public boolean hasMine(Minefield minefield, long x, long y) {
+		return false;
 	}
 
 	/**
@@ -152,23 +235,10 @@ public class MinesweeperEngineService
 	 * @param minefield
 	 * @param x
 	 * @param y
-	 * @return bool
+	 * @return
 	 */
 	public boolean isDiscovered(Minefield minefield, long x, long y)
 	{
-		if (minefield != null)
-		{
-			if (minefield[x][y].estRevelee == true)
-			{
-				return true;
-			}
-
-			else
-			{
-				return false;
-			}
-		}
-
 		return false;
 	}
 }
