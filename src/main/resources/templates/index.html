@@ -15,20 +15,23 @@
             <th>Width</th>
             <th>Height</th>
             <th>Count</th>
+            <th>Status</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="game: ${games}" th:object="${game}" th:if="${game.status=='STARTED'}">
+        <!-- th:if="${game.status == 'STARTED'}"-->
+        <tr th:each="game: ${games}"  th:object="${game}">
             <td th:text="*{id}">1</td>
             <td th:text="*{width}">pierre.ponce@something.org</td>
             <td th:text="*{height}">Pierre</td>
             <td th:text="*{count}">Ponce</td>
+            <td th:text="*{status}">Ponce</td>
             <td>
-                <a href="#" th:href="@{/game/update/{id}(id=*{id})}" class="btn btn-primary">
+                <a href="#"  th:href="@{/game/play/{id}(id=*{id})}" class="btn btn-primary">
                     <i class="ri-play-line"></i>
                 </a>
-                <form action="#" th:action="@{/game/delete/{id}(id=*{id})}" method="post" style="display: inline">
+                <form action="#" th:action="@{/minesweeper/delete/{id}(id=*{id})}" method="post" style="display: inline">
                     <button type="submit" class="btn btn-danger"><i class="ri-delete-bin-line"></i></button>
                 </form>
             </td>

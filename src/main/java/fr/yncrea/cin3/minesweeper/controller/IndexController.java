@@ -1,5 +1,6 @@
 package fr.yncrea.cin3.minesweeper.controller;
 
+import fr.yncrea.cin3.minesweeper.domain.GameStatus;
 import fr.yncrea.cin3.minesweeper.repository.MinefieldRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -56,5 +56,10 @@ public class GameController {
 
         return "play";
     }
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable UUID id) {
+        minefield.deleteById(id);
+        return "redirect:/";
+    }
 }
 
