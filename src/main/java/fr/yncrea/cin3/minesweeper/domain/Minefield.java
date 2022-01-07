@@ -21,22 +21,52 @@ public class Minefield
 
 	private long width;
 	private long height;
-	private long count;
+	private long count; // nb de mines
+	private int caseDecouvertes;
 
 	@Enumerated(EnumType.STRING)
 	private GameStatus status;
 
-
-	private tab[][] board;
+	//0 -> non decouverte; 1 -> decouverte; 2 -> Bombe non decouverte; 3 -> bombe decouverte
+	@Lob
+	private int[][] minefield;
 
 	public Minefield() {}
 
-	public Minefield(long width, long height,GameStatus status, long count)
+	public Minefield(long width, long height)
+		{
+			this.width = width;
+			this.height = height;
+			this.count = 0;
+		}
+	public Minefield(long width, long height, long count)
 	{
 		this.width = width;
 		this.height = height;
-		this.status = status;
+		this.status = GameStatus.STARTED;
 		this.count = count;
+		this.minefield = new int[(int) width][(int) height];
+		buildMinefield();
+
 	}
 
+	private void buildMinefield()
+	{
+		for (int i = 0; i < width; i++)
+		{
+			for (int j = 0; j < height; j++)
+			{
+				minefield[i][j] = 0;
+			}
+		}
+
+	}
+
+	private boolean hasMine(int x, int y)
+	{
+		if (this.getMinefield()[(int) x][(int) y] == 2 || this.getMinefield()[(int) x][(int) y] == 3)
+			return true;
+		else
+			return false;
+	}
 }

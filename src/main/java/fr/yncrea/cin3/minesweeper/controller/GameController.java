@@ -2,6 +2,7 @@ package fr.yncrea.cin3.minesweeper.controller;
 
 import fr.yncrea.cin3.minesweeper.domain.GameStatus;
 import fr.yncrea.cin3.minesweeper.domain.Minefield;
+import fr.yncrea.cin3.minesweeper.exception.MinesweeperException;
 import fr.yncrea.cin3.minesweeper.form.CreateForm;
 import fr.yncrea.cin3.minesweeper.repository.MinefieldRepository;
 import fr.yncrea.cin3.minesweeper.service.MinesweeperEngineService;
@@ -49,13 +50,29 @@ public class GameController {
         return "redirect:/minesweeper/game/" + m.getId();
     }
 
+    @GetMapping("/game/{gameId}/{col}/{row}")
+    public String jeu(@PathVariable UUID gameId, @PathVariable int col, @PathVariable int row, Model model)
+    {
+        Minefield m = minefield.findById(gameId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        try {
+            minefieldService.play(m, col, row);
+            minefield.save(m);
+        } catch (MinesweeperException e){
+
+        }
+
+        return "redirect:/minesweeper/game/" + m.getId();
+    }
+
     @GetMapping("/game/{gameId}")
-    public String newGame(@PathVariable UUID gameId, Model model) {
+    public String newGame(@PathVariable UUID gameId, Model model)
+    {
         Minefield m = minefield.findById(gameId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         model.addAttribute("game", m);
 
         return "play";
     }
+
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable UUID id) {
         minefield.deleteById(id);

@@ -1,9 +1,18 @@
 package fr.yncrea.cin3.minesweeper.service;
 
-import fr.yncrea.cin3.minesweeper.domain.GameStatus;
-import fr.yncrea.cin3.minesweeper.domain.Minefield;
-import org.springframework.stereotype.Service;
+import fr.yncrea.cin3.minesweeper.exception.MinesweeperException;
+import lombok.Getter;
+import lombok.Setter;
 
+
+import fr.yncrea.cin3.minesweeper.domain.GameStatus;
+import fr.yncrea.cin3.minesweeper.domain.*;
+import org.springframework.stereotype.Service;
+import java.lang.Math;
+
+import javax.validation.constraints.Min;
+@Getter
+@Setter
 @Service
 public class MinesweeperEngineService
 {
@@ -11,7 +20,7 @@ public class MinesweeperEngineService
 	 * Create a new minefield
 	 *
 	 * @param width
-	 * @param height
+	 * @param height hauteur
 	 * @param count
 	 * @return
 	 */
@@ -21,7 +30,7 @@ public class MinesweeperEngineService
 	}
 
 	/**
-	 * Create a new minefield
+	 * Fonction utile à la fonction floofill()
 	 *
 	 * @param minefield
 	 * @param x Colonne actuellle
@@ -32,57 +41,52 @@ public class MinesweeperEngineService
 	 * @param newC
 	 * @return Que dalle !
 	 */
-	/*static void floodFillUtil(Minefield minefield, int x, int y, int nb_colonne, int nb_ligne, int prevC, int newC)
+	/**static void floodFillUtil(int minefield[][], int x, int y, int nb_colonne, int nb_ligne, int prevC, int newC)
 	{
-		/**
-		 * 							Algo à ma façon :
-		 * Récupérer les coordonnées x et y de la case sur laquelle on clique
-		 * si c'est une bombe :
-		 * 		la partie est terminée
-		 *
-		 * 	for(i=-1; i<2; i++)
-		 * 	{
-		 * 		for(j=-1; j<2; j++)
-		 * 		{
-		 * 			si minefield[x][y] == 0 :
-		 * 		  		Découvrir la cellule
-		 * 		  		x=i
-		 * 		  		y=j
-		 * 		  		(récursivité) lancer une nouvelle fois la fonction avec les nouveaux x et y
-		 *
-		 * 		  		for(k=-1; k<2; k++)
-		 * 		 		{
-		 * 		  			for(l=-1; l<2; l++)
-		 * 		  			{
-		 * 		  				si minefield[k][l] != 0 && minefield[k][l] n'est pas une bombe :
-		 * 		  		  			Découvrir la cellule
-		 * 		  		 			afficher le numéro de bombe qu'elle a à coté d'elle
-		 * 		  			}
-		 * 		  		}
-		 * 		 }
-		 * 	}
-		 */
-		/**if (x < 0 || x >= nb_colonne || y < 0 || y >= nb_ligne)
-			return;
-		if (minefield[x][y] != prevC)
-			return;
 
-		// Replace the color at (x, y)
-		minefield[x][y] = newC;
+		if (minefield[x][y].hasMine(minefield, x, y) == true)
+		{
+//			fin de partie
+		}
 
-		// Recur for north, east, south and west
-		floodFillUtil(minefield, x+1, y, nb_colonne, nb_ligne, prevC, newC);
-		floodFillUtil(minefield, x-1, y, nb_colonne, nb_ligne, prevC, newC);
-		floodFillUtil(minefield, x, y+1, nb_colonne, nb_ligne, prevC, newC);
-		floodFillUtil(minefield, x, y-1, nb_colonne, nb_ligne, prevC, newC);*/
-	/*}
+		for (int i = -1; i < 2; i++)
+		{
+			for (int j = -1; j < 2; j++)
+			{
+				if (minefield[x][y] == 0)
+				{
+//					Découvrir la cellule
 
-	/*static void floodFill(Minefield minefield, int x, int y, int nb_colonne, int nb_ligne, int newC)
+					x = i;
+					y = j;
+
+					floodFillUtil(minefield, x, y, nb_colonne, nb_ligne, prevC, newC);
+
+					for (int k = -1; k < 2; k++)
+					{
+						for (int l = -1; l < 2; l++)
+						{
+							if (minefield[k][l] != 0 && minefield[k][l] != 9)
+							{
+			//					Découvrir la cellule
+//								afficher son numéro (cb de mines à côté d'elle)
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	static void floodFill(int minefield[][], int x, int y, int nb_colonne, int nb_ligne, int newC)
 	{
 		int prevC = minefield[x][y];
+
 		if(prevC==newC) return;
+
 		floodFillUtil(minefield, x, y, nb_colonne, nb_ligne, prevC, newC);
-	}
+	}*/
+
 	/**
 	 * Discover a new cell, and update the game (win/loss detection, ...)
 	 *
@@ -103,10 +107,11 @@ public class MinesweeperEngineService
 	 * @param y - ligne
 	 * 9 = il y a une bombe
 	 */
-	/*public void addMine(Minefield minefield, long x, long y)
-	{
-//		Mise en commentaire de la ligne suivante car le type de minefield n'est pas encore déterminé
-//		minefield[x][y] = 9;
+	public void addMine(Minefield minefield, long x, long y) {
+		if (x < 0 || x > minefield.getWidth() - 1 || y < 0 || y > minefield.getHeight() - 1) {
+			throw new MinesweeperException("Ajout d'une mine hors champ");
+		}
+		minefield.getMinefield()[(int) x][(int) y] = 2;
 	}
 
 	/**
@@ -182,7 +187,22 @@ public class MinesweeperEngineService
 	 */
 	public Minefield create(long width, long height, long count, GameStatus status)
 	{
-		return new Minefield(width, height, status,count);
+		Minefield m = new Minefield(width, height,count);
+
+		for (int k = 0; k < count; k++){
+			int width_tp = (int) (Math.random() * width);
+			int height_tp = (int) (Math.random() * height);
+
+			if(hasMine(m, width_tp, height_tp)){
+				k--;
+			}
+			else{
+				addMine(m,width_tp,height_tp);
+			}
+
+		}
+
+		return m;
 	}
 
 	/**
@@ -195,15 +215,6 @@ public class MinesweeperEngineService
 	public void play(Minefield minefield, long x, long y)
 	{}
 
-	/**
-	 * Add a mine on the field
-	 *
-	 * @param minefield
-	 * @param x
-	 * @param y
-	 */
-	public void addMine(Minefield minefield, long x, long y)
-	{}
 
 	/**
 	 * Returns the mine count near a cell
@@ -226,9 +237,9 @@ public class MinesweeperEngineService
 	 * @param y
 	 * @return
 	 */
-	public boolean hasMine(Minefield minefield, long x, long y) {
-		return false;
-	}
+
+
+
 
 	/**
 	 * Returns true is the cell is already discovered
@@ -238,8 +249,8 @@ public class MinesweeperEngineService
 	 * @param y
 	 * @return
 	 */
-	public boolean isDiscovered(Minefield minefield, long x, long y)
-	{
-		return false;
-	}
+//	public boolean isDiscovered(Minefield minefield, long x, long y)
+//	{
+//		return false;
+//	}
 }
