@@ -13,15 +13,15 @@
         <input type="hidden" th:field="*{id}">
         <div class="form-group">
             <label for="width">Field Width</label>
-            <input type="text" class="form-control" id="width" value="14" placeholder="width" th:field="*{width}" >
+            <input type="number" class="form-control" id="width" value="14" min="2" max="20" placeholder="width" th:field="*{width}">
         </div>
         <div class="form-group">
             <label for="height">Field Height</label>
-            <input type="text" class="form-control" id="height" value="14"  placeholder="height" th:field="*{height}">
+            <input type="number" class="form-control" id="height" value="14" min="2" max="20" placeholder="height" th:field="*{height}">
         </div>
         <div class="form-group">
             <label for="count">Number of mines</label>
-            <input type="text" class="form-control" id="count" value="4"  placeholder="Number of mines" th:field="*{count}">
+            <input type="number" class="form-control" id="count" value="4" min="2" max="20" placeholder="Number of mines" th:field="*{count}">
         </div>
         <button type="submit" class="btn btn-primary">New Game</button>
     </form>

@@ -10,90 +10,13 @@ import fr.yncrea.cin3.minesweeper.domain.*;
 import org.springframework.stereotype.Service;
 import java.lang.Math;
 
-import javax.validation.constraints.Min;
+
 @Getter
 @Setter
 @Service
 public class MinesweeperEngineService
 {
-	/**
-	 * Create a new minefield
-	 *
-	 * @param width
-	 * @param height hauteur
-	 * @param count
-	 * @return
-	 */
-	/*public Minefield create(long width, long height, long count)
-	{
-		return new Minefield(width, height);
-	}
 
-	/**
-	 * Fonction utile à la fonction floofill()
-	 *
-	 * @param minefield
-	 * @param x Colonne actuellle
-	 * @param y Ligne actuelle
-	 * @param nb_colonne Nombre de colonnes au total
-	 * @param nb_ligne Nombre de lignes au total
-	 * @param prevC
-	 * @param newC
-	 * @return Que dalle !
-	 */
-	static void floodFillUtil(int minefield[][], int x, int y, int nb_colonne, int nb_ligne, int prevC, int newC)
-	{
-		if (minefield[x][y] == 2 || minefield[x][y] == 2)
-		{
-//			fin de partie
-		}
-
-		for (int i = -1; i < 2; i++)
-		{
-			for (int j = -1; j < 2; j++)
-			{
-				if (minefield[x][y] == 0)
-				{
-//					Découvrir la cellule
-
-					x = i;
-					y = j;
-
-					floodFillUtil(minefield, x, y, nb_colonne, nb_ligne, prevC, newC);
-
-					for (int k = -1; k < 2; k++)
-					{
-						for (int l = -1; l < 2; l++)
-						{
-							if (minefield[k][l] != 0 && minefield[k][l] != 9)
-							{
-			//					Découvrir la cellule
-//								afficher son numéro (cb de mines à côté d'elle)
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	static void floodFill(int minefield[][], int x, int y, int nb_colonne, int nb_ligne, int newC)
-	{
-		int prevC = minefield[x][y];
-
-		if(prevC==newC) return;
-
-		floodFillUtil(minefield, x, y, nb_colonne, nb_ligne, prevC, newC);
-	}
-
-	/**
-	 * Add a mine on the field
-	 *
-	 * @param minefield
-	 * @param x - colonne
-	 * @param y - ligne
-	 * 9 = il y a une bombe
-	 */
 	public void addMine(Minefield minefield, long x, long y) {
 		if (x < 0 || x > minefield.getWidth() - 1 || y < 0 || y > minefield.getHeight() - 1) {
 			throw new MinesweeperException("Ajout d'une mine hors champ");
@@ -101,38 +24,7 @@ public class MinesweeperEngineService
 		minefield.getMinefield()[(int) x][(int) y] = 2;
 	}
 
-	/**
-	 * Returns the mine count near a cell
-	 *
-	 * @param minefield
-	 * @param x colonne
-	 * @param y ligne
-	 * @return
-	 */
-	/*public long getMineCountNear(Minefield minefield, long x, long y)
-	{
-		return 0;
-	}
 
-	/**
-	 * Returns true is the cell contains a mine
-	 *
-	 * @param minefield
-	 * @param colonne
-	 * @param ligne
-	 * @return bool
-	 */
-
-	public boolean hasMine(int minefield, int colonne, int ligne)
-	{
-		if (minefield[colonne][ligne] == 3)
-		{
-			return true;
-		}
-
-		else
-			return false;
-	}
 
 	/**
 	 * Create a new minefield
@@ -142,7 +34,7 @@ public class MinesweeperEngineService
 	 * @param count
 	 * @return
 	 */
-	public Minefield create(long width, long height, long count, GameStatus status)
+	public Minefield create(long width, long height, long count)
 	{
 		Minefield m = new Minefield(width, height,count);
 
@@ -166,42 +58,53 @@ public class MinesweeperEngineService
 	 * Discover a new cell, and update the game (win/loss detection, ...)
 	 *
 	 * @param minefield
-	 * @param x
-	 * @param y
+	 * @param row
+	 * @param col
 	 */
-	public void play(Minefield minefield, int colonne, int ligne int x, int y)
-	{
-		if (minefield[x][y] == 1)
-		{
-			throw new MinesweeperException("Case déjà découverte");
-		}
+	// Discover a new cell, and update the game (win/loss detection, ...)
+	public void play(Minefield minefield, long row, long col) {
 
-		else
-		{
-			if (hasMine(minefield, x, y))
-			{
-				minefield[x][y] = 2;
-				// partie perdue
+			if (isDiscovered(minefield, row, col)) {
+				throw new MinesweeperException("Case deja découverte !");
 			}
+			else {
+				if (hasMine(minefield, row, col)) {
+					minefield.setStatus(GameStatus.LOST);
+					showMinefield(minefield);
+				} else {
+					//if (getMineCountNear(minefield, row, col) == 0)
+						//discoverNearCell(minefield, row, col); //fonction a faire
 
-			else
-			{
-				floodFill(minefield, x, y, nb_colonne, nb_ligne, newC);
+					//else
+						//minefield.setCases(minefield.getCases() + 1);
+
+					minefield.getMinefield()[(int) row][(int) col] = 1;
+				}
+			}
+			//isWin(minefield);
+
+	}
+
+	// Révèle tout le champ de mines
+	public void showMinefield(Minefield minefield) {
+		for (int i = 0; i < minefield.getWidth(); i++) {
+			for (int j = 0; j < minefield.getHeight(); j++) {
+				if (minefield.getMinefield()[i][j] == 2) {
+					minefield.getMinefield()[i][j] = 3;
+				}
 			}
 		}
 	}
 
-	private boolean hasMine(Minefield minefield, int x, int y)
+
+
+
+	public boolean hasMine(Minefield minefield, long x, long y)
 	{
 		if (minefield.getMinefield()[(int) x][(int) y] == 2 || minefield.getMinefield()[(int) x][(int) y] == 3)
-		{
 			return true;
-		}
-
 		else
-		{
 			return false;
-		}
 	}
 
 	/**
@@ -210,12 +113,26 @@ public class MinesweeperEngineService
 	 * @param minefield
 	 * @param x
 	 * @param y
-	 * @return 0
+	 * @return
 	 */
-	public long getMineCountNear(Minefield minefield, long x, long y)
-	{
-		return 0;
+	public long getMineCountNear(Minefield minefield, long x, long y) {
+
+		int nbCount = 0;
+
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				if (x+i >= 0 && x+i < minefield.getWidth() && y+j >= 0 && y+j < minefield.getHeight()) {
+					if (minefield.hasMine((int) (x + i), (int) (y + j))) {
+						nbCount++;
+					}
+				}
+			}
+		}
+
+		return nbCount;
 	}
+
+
 
 	/**
 	 * Returns true is the cell is already discovered
@@ -223,18 +140,12 @@ public class MinesweeperEngineService
 	 * @param minefield
 	 * @param x
 	 * @param y
-	 * @return
+	 * @return bool
 	 */
-	public boolean isDiscovered(Minefield minefield, long x, long y)
-	{
-//		if (minefield.getMinefield()[(int) x][(int) y] == 1 || minefield.getMinefield()[(int) x][(int) y] == 3)
-//		{
-//			return true;
-//		}
-//
-//		else
-//		{
-//			return false;
-//		}
+	public boolean isDiscovered(Minefield minefield, long x, long y) {
+		if (minefield.getMinefield()[(int) x][(int) y] == 1 || minefield.getMinefield()[(int) x][(int) y] == 3)
+			return true;
+		else
+			return false;
 	}
 }

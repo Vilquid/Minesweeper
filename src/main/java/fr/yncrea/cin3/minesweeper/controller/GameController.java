@@ -45,7 +45,7 @@ public class GameController {
 
         //if (form.getId() != null) {
         //.orElseThrow(() -> new RuntimeException("game not create"));
-        Minefield m = minefield.save(minefieldService.create(form.getWidth(), form.getHeight(), form.getCount(), GameStatus.STARTED));
+        Minefield m = minefield.save(minefieldService.create(form.getWidth(), form.getHeight(), form.getCount()));
         //}
         return "redirect:/minesweeper/game/" + m.getId();
     }
@@ -72,6 +72,13 @@ public class GameController {
 
         return "play";
     }
+   /** @GetMapping("/game/{gameId}/{col}:{row}")
+    public String jeu(@PathVariable UUID gameId, Model model) {
+        Minefield m = minefield.findById(gameId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        model.addAttribute("game", m);
+
+        return "play";
+    }**/
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable UUID id) {
